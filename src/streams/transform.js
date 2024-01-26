@@ -5,7 +5,7 @@ const transform = async () => {
     const readable = stdin;
     const writable = stdout;
     const transform = new Transform({
-        transform(chunk, end, cb) {
+        transform(chunk, enc, cb) {
             const reversedChunk = chunk.toString().trim().split('').reverse().join('');
             cb(null, reversedChunk + '\n');
         }
