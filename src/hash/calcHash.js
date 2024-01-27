@@ -1,11 +1,10 @@
 import { createHash } from 'crypto';
 import { readFile } from 'fs/promises'
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import getRootDir from '../shared/lib/utils.js'
+import { join } from 'path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const filePath = `${__dirname}/files/fileToCalculateHashFor.txt`;
+const rootDir = getRootDir(import.meta.url);
+const filePath = join(rootDir, 'files', 'fileToCalculateHashFor.txt');
 
 const calculateHash = async () => {
     const content = await readFile(filePath, { encoding: 'utf-8'});

@@ -1,19 +1,19 @@
 import { pipeline } from 'stream';
 import { createReadStream, createWriteStream } from 'fs';
-import { createUnzip } from 'zlib';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { createGunzip } from 'zlib';
+import { join } from 'path';
+import getRootDir from '../shared/lib/utils.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const rootDir = getRootDir(import.meta.url);
 
-const srcFilePath = `${__dirname}/files/archive.gz`;
-const destFilePath = `${__dirname}/files/fileToCompress.txt`;
+const srcFile = join(rootDir, 'files', 'archive.gz');
+const destFile = join(rootDir, 'files', 'fileToCompress.txt');
+
 
 const decompress = async () => {
-    const readable = createReadStream(srcFilePath);
-    const unZipper = createUnzip();
-    const writable = createWriteStream(destFilePath);
+    const readable = createReadStream(srcFile);
+    const unZipper = createGunzip();
+    const writable = createWriteStream(destFile);
     pipeline(
         readable,
         unZipper, 

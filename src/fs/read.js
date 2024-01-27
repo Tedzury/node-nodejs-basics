@@ -3,6 +3,7 @@ import { join } from 'path';
 import getRootDir from '../shared/lib/utils.js';
 
 const rootDir = getRootDir(import.meta.url);
+
 const srcFile = join(rootDir, 'files', 'fileToRead.txt');
 const errText = 'FS operation failed';
 

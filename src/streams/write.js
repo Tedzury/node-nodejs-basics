@@ -1,12 +1,11 @@
 import { createWriteStream } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { join } from 'path';
+import getRootDir from '../shared/lib/utils.js';
 import { stdin } from 'process';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const rootDir = getRootDir(import.meta.url);
 
-const filePath = `${__dirname}/files/fileToWrite.txt`;
+const filePath = join(rootDir, 'files', 'fileToWrite.txt');
 
 const write = async () => {
     const writeStream = createWriteStream(filePath);

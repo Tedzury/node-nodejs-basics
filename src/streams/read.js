@@ -1,12 +1,11 @@
 import { createReadStream } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { join } from 'path';
+import getRootDir from '../shared/lib/utils.js'
 import { stdout } from 'process';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const rootDir = getRootDir(import.meta.url);
 
-const filePath = `${__dirname}/files/fileToRead.txt`;
+const filePath = join(rootDir, 'files', 'fileToRead.txt');
 
 const read = async () => {
     const readStream = createReadStream(filePath);
