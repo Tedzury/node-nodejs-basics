@@ -1,20 +1,17 @@
-import { access, readFile } from 'node:fs/promises'
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { readFile } from 'node:fs/promises'
+import { join } from 'path';
+import getRootDir from '../shared/lib/utils.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const filePath = `${__dirname}/files/fileToRead.txt`;
-const fileAbsentErrText = 'FS operation failed';
+const rootDir = getRootDir(import.meta.url);
+const srcFile = join(rootDir, 'files', 'fileToRead.txt');
+const errText = 'FS operation failed';
 
 const read = async () => {
     try {
-        await access(filePath);
-        const content = await readFile(filePath, { encoding: 'utf-8'});
-        return console.log(content);
+        const content = await readFile(srcFile, { encoding: 'utf-8'});
+        console.log(content);
     } catch {
-        console.log(fileAbsentErrText)
+        throw new Error(errText);
     }
 };
 

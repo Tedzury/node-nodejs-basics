@@ -1,33 +1,18 @@
-import { access, cp } from 'node:fs/promises';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { cp } from 'node:fs/promises';
+import { join } from 'path';
+import getRootDir from '../shared/lib/utils.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const rootDir = getRootDir(import.meta.url);
 
-const srcFolderPath = `${__dirname}/files`;
-const destFolderPath = `${__dirname}/files_copy`;
-const foldersErrText = 'FS operation failed';
+const srcDirPath = join(rootDir, 'files');
+const destDirPath = join(rootDir, 'files_copy');
+const errText = 'FS operation failed';
 
 const copy = async () => {
-    let doesSrcExist = false;
-    let doesNotDestExist = false;
-    try {
-        await access(srcFolderPath)
-        doesSrcExist = true;
-    } catch {}
-    try {
-        await access(destFolderPath)
+    try {   
+       await cp(srcDirPath, destDirPath, { recursive: true, force: false, errorOnExist: true })
     } catch {
-        doesNotDestExist = true;
-    }
-    try {
-        if (doesSrcExist && doesNotDestExist) {
-            return cp(srcFolderPath, destFolderPath, {recursive: true});
-        }
-        throw new Error(foldersErrText);
-    } catch (err) {
-        console.log(err.message);
+        throw new Error(errText)
     }
 };
 

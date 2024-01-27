@@ -1,26 +1,19 @@
-import { access, writeFile } from 'node:fs/promises';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { writeFile } from 'node:fs/promises';
+import { join } from 'path';
+import getRootDir from '../shared/lib/utils.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const rootDir = getRootDir(import.meta.url);
 
-const filePath = `${__dirname}/files/fresh.txt`;
+const filePath = join(rootDir, 'files', 'fresh.txt');
 const fileContent = 'I am fresh and young';
-const fileExistErrText = 'FS operation failed';
+const errText = 'FS operation failed';
 
 const create = async () => {
     try {
-        await access(filePath)
-        throw new Error(fileExistErrText);
-    } catch(err) {
-        if (err.message === fileExistErrText) return console.log(err.message)
-        try {
-            writeFile(filePath, fileContent);
-        } catch (err) {
-            console.log('Something went wrong during file write')
-        }
+        await writeFile(filePath, fileContent, { flag: 'wx'});
+    } catch {
+        throw new Error(errText)
     }
-};
+}
 
 await create();

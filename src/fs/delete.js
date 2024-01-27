@@ -1,19 +1,17 @@
-import { access, rm } from 'node:fs/promises';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { rm } from 'node:fs/promises';
+import { join } from 'path';
+import getRootDir from '../shared/lib/utils.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const rootDir = getRootDir(import.meta.url);
 
-const srcFileName = `${__dirname}/files/fileToRemove.txt`;
-const fileAbsentErrText = 'FS operation failed';
+const srcFileName = join(rootDir, 'files', 'fileToRemove.txt');
+const errText = 'FS operation failed';
 
 const remove = async () => {
     try {
-        await access(srcFileName);
-        return rm(srcFileName)
+        await rm(srcFileName)
     } catch {
-        console.log(fileAbsentErrText)
+        throw new Error(errText);
     }
 };
 

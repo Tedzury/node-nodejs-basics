@@ -1,8 +1,8 @@
 import { pipeline } from 'stream';
 import { createReadStream, createWriteStream } from 'fs';
+import { createUnzip } from 'zlib';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { createUnzip } from 'zlib';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
