@@ -1,4 +1,4 @@
-import { pipeline } from 'stream';
+import { pipeline } from 'stream/promises';
 import { createReadStream, createWriteStream } from 'fs';
 import { createGunzip } from 'zlib';
 import { join } from 'path';
@@ -18,9 +18,6 @@ const decompress = async () => {
         readable,
         unZipper, 
         writable,
-        err => {
-            console.log(err);
-        }
     ); 
 };
 

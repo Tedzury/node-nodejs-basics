@@ -1,6 +1,5 @@
-import { pipeline } from 'stream';
+import { pipeline } from 'stream/promises';
 import { createReadStream, createWriteStream } from 'fs';
-import { fileURLToPath } from 'url';
 import { join } from 'path';
 import getRootDir from '../shared/lib/utils.js';
 import { createGzip } from 'zlib';
@@ -18,9 +17,6 @@ const compress = async () => {
         readable,
         zipper, 
         writable,
-        err => {
-            console.log(err);
-        }
     );
 };
 
